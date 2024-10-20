@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import weatherRoutes from './routes/weatherRoutes.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
+app.use(cors())
 // Middleware for parsing JSON
 app.use(express.json());
 

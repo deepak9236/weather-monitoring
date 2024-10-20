@@ -14,20 +14,21 @@ const Dashboard = () => {
   const fetchWeatherData = async () => {
     try {
       setLoading(true);
-
+      console.log("depak:- ",process.env.REACT_APP_API_URL);
+      const baseURL = process.env.REACT_APP_API_URL;
+  
       // Fetch weather summary data
-      const summaryResponse = await fetch('/api/weather/summary');
+      const summaryResponse = await fetch(`${baseURL}/weather/summary`);
       if (!summaryResponse.ok) throw new Error('Failed to fetch weather summary');
       const summaryData = await summaryResponse.json();
       setWeatherSummary(summaryData);
-
+  
       // Fetch weather alerts data
-      const alertsResponse = await fetch('/api/weather/alerts');
+      const alertsResponse = await fetch(`${baseURL}/weather/alerts`);
       if (!alertsResponse.ok) throw new Error('Failed to fetch alerts');
       const alertsData = await alertsResponse.json();
       setAlerts(alertsData);
-
-      // Show popup if there are alerts
+  
       if (alertsData.length > 0) {
         setShowPopup(true);
       }
@@ -37,7 +38,7 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
-
+  
   // Trigger fetchWeatherData on page load and at regular intervals
   useEffect(() => {
     fetchWeatherData();
